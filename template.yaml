@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  awsContact
+
+  Sample SAM Template for awsContact
+
+Globals:
+  Function:
+    Timeout: 20
+
+Resources:
+  ContactFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ContactFunction
+      Handler: edu.uchicago.caor.contact.SendContactLambda::handleRequest
+      Runtime: java11
+      MemorySize: 512
+      Environment:
+        Variables:
+          PARAM1: VALUE
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /contact
+            Method: POST
+Outputs:
+  contactApi:
+    Description: "API Gateway endpoint for contactApi"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/contact"
+
