@@ -14,6 +14,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ContactFunction
+      Policies: arn:aws:iam::aws:policy/AmazonSESFullAccess
       Handler: edu.uchicago.caor.contact.SendContactLambda::handleRequest
       Runtime: java11
       MemorySize: 512
