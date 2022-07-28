@@ -17,10 +17,6 @@ public class SendContactLambda implements RequestHandler<APIGatewayProxyRequestE
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     static final String TO = "caor@uchicago.edu";
-    static final String HTMLBODY = "<h1>Amazon SES test (AWS SDK for Java)</h1>"
-            + "<p>This email was sent with <a href='https://aws.amazon.com/ses/'>"
-            + "Amazon SES</a> using the <a href='https://aws.amazon.com/sdk-for-java/'>"
-            + "AWS SDK for Java</a>";
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
 
@@ -36,14 +32,12 @@ public class SendContactLambda implements RequestHandler<APIGatewayProxyRequestE
         try {
             AmazonSimpleEmailService client = AmazonSimpleEmailServiceClientBuilder
                     .standard()
-                    .withRegion(Regions.US_WEST_2)
+                    .withRegion(Regions.US_EAST_1)
                     .build();
             SendEmailRequest request = new SendEmailRequest()
                     .withDestination(new Destination().withToAddresses(TO))
                     .withMessage(new Message()
                             .withBody(new Body()
-                                    .withHtml(new Content()
-                                            .withCharset("UTF-8").withData(HTMLBODY))
                                     .withText(new Content()
                                             .withCharset("UTF-8").withData(message.getBody())))
                             .withSubject(new Content()
